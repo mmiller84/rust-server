@@ -1,0 +1,21 @@
+name: Lua
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  main:
+    name: Lua
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install tools
+        run: luarocks install luacheck
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Lint
+        run: luacheck --std lua51 ./lua
