@@ -109,4 +109,12 @@ impl TriggerService for MissionRpc {
         self.notification("signalFlare", request).await?;
         Ok(Response::new(trigger::v0::SignalFlareResponse {}))
     }
+
+    async fn get_zone(
+        &self,
+        request: Request<trigger::v0::GetZoneRequest>,
+    ) -> Result<Response<trigger::v0::GetZoneResponse>, Status> {
+        let res: trigger::v0::GetZoneResponse = self.request("getZone", request).await?;
+        Ok(Response::new(res))
+    }
 }
