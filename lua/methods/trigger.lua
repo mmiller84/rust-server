@@ -156,14 +156,12 @@ GRPC.methods.getZone = function(params)
   local zone = trigger.misc.getZone(params.zoneName)
   local lat,lon,alt = coord.LOtoLL(zone.point)
 
-  local coords = {
-    lat = lat,
-    lon = lon,
-    alt = alt
-  }
-
   return GRPC.success({
-    position = coords,
+    position = {
+      lat = lat,
+      lon = lon,
+      alt = alt
+    },
     radius = zone.radius
   })
 end
