@@ -25,6 +25,9 @@ service CustomService {
    */
   rpc GetMagneticDeclination(GetMagneticDeclinationRequest)
       returns (GetMagneticDeclinationResponse) {}
+
+  rpc GetTickets(GetTicketsRequest)
+    returns (GetTicketsResponse) {}
 }
 
 message RequestMissionAssignmentRequest {
@@ -63,4 +66,12 @@ message GetMagneticDeclinationResponse {
   /// declination, while a positive value is a easterly declination. `True
   /// North` + `declination` = `Magnetic North`
   double declination = 1;
+}
+
+message GetTicketsRequest {
+}
+
+message GetTicketsResponse {
+  int32 red = 1;
+  int32 blue = 2;
 }

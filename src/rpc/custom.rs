@@ -68,4 +68,12 @@ impl CustomService for MissionRpc {
             declination,
         }))
     }
+
+    async fn get_tickets(
+        &self,
+        request: Request<custom::v0::GetTicketsRequest>,
+    ) -> Result<Response<custom::v0::GetTicketsResponse>, Status> {
+        let res: custom::v0::GetTicketsResponse = self.request("getTickets", request).await?;
+        Ok(Response::new(res))
+    }
 }

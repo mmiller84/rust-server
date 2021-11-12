@@ -23,3 +23,10 @@ GRPC.methods.missionEval = function(params)
 
     return GRPC.success(result)
 end
+
+GRPC.methods.getTickets = function()
+    return GRPC.success({
+        red = CONQUEST.getRedTickets(),
+        blue = CONQUEST.getBlueTickets(),
+    })
+end
