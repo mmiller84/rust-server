@@ -151,3 +151,19 @@ GRPC.methods.signalFlare = function(params)
 
   return GRPC.success(nil)
 end
+
+GRPC.methods.getZone = function(params)
+  local zone = trigger.misc.getZone(params.zoneName)
+  local lat,lon,alt = coord.LOtoLL(zone.point)
+
+  local coords = {
+    lat = lat,
+    lon = lon,
+    alt = alt
+  }
+
+  return GRPC.success({
+    position = coords,
+    radius = zone.radius
+  })
+end
