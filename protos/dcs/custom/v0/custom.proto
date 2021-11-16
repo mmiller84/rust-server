@@ -1,5 +1,6 @@
 syntax = "proto3";
 package dcs.custom.v0;
+import "dcs/common/v0/common.proto";
 
 // The Custom service is for APIs that do not map to the "standard library" of
 // DCS APIs provided by Eagle Dynamics.
@@ -28,6 +29,18 @@ service CustomService {
 
   rpc GetTickets(GetTicketsRequest)
     returns (GetTicketsResponse) {}
+
+  rpc InitializeTickets(InitializeTicketsRequest)
+    returns (InitializeTicketsResponse) {}
+
+  rpc OnZoneCaptured(OnZoneCapturedRequest)
+    returns (OnZoneCapturedResponse) {}
+
+  rpc IsZoneEmpty(IsZoneEmptyRequest)
+    returns (IsZoneEmptyResponse) {}
+
+  rpc SendMessageFromHQ(SendMessageFromHQRequest)
+    returns (SendMessageFromHQResponse) {}
 }
 
 message RequestMissionAssignmentRequest {
@@ -74,4 +87,37 @@ message GetTicketsRequest {
 message GetTicketsResponse {
   int32 red = 1;
   int32 blue = 2;
+}
+
+message InitializeTicketsRequest {
+  int32 maxRedTickets = 1;
+  int32 maxBlueTickets = 2;
+}
+
+message InitializeTicketsResponse {
+}
+
+message OnZoneCapturedRequest {
+  dcs.common.v0.Coalition coalition = 1;
+  string zoneName = 2;
+  string zoneFriendlyName = 3;
+}
+
+message OnZoneCapturedResponse {
+}
+
+message IsZoneEmptyRequest {
+  string zoneName = 1;
+}
+
+message IsZoneEmptyResponse {
+  bool empty = 1;
+}
+
+message SendMessageFromHQRequest {
+  dcs.common.v0.Coalition coalition = 1;
+  string text = 2;
+}
+
+message SendMessageFromHQResponse {
 }

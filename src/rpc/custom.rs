@@ -76,4 +76,36 @@ impl CustomService for MissionRpc {
         let res: custom::v0::GetTicketsResponse = self.request("getTickets", request).await?;
         Ok(Response::new(res))
     }
+
+    async fn initialize_tickets(
+        &self,
+        request: Request<custom::v0::InitializeTicketsRequest>,
+    ) -> Result<Response<custom::v0::InitializeTicketsResponse>, Status> {
+        self.request("initializeTickets", request).await?;
+        Ok(Response::new(custom::v0::InitializeTicketsResponse {}))
+    }
+
+    async fn on_zone_captured(
+        &self,
+        request: Request<custom::v0::OnZoneCapturedRequest>,
+    ) -> Result<Response<custom::v0::OnZoneCapturedResponse>, Status> {
+        self.request("onZoneCaptured", request).await?;
+        Ok(Response::new(custom::v0::OnZoneCapturedResponse {}))
+    }
+
+    async fn is_zone_empty(
+        &self,
+        request: Request<custom::v0::IsZoneEmptyRequest>,
+    ) -> Result<Response<custom::v0::IsZoneEmptyResponse>, Status> {
+        let res: custom::v0::IsZoneEmptyResponse = self.request("isZoneEmpty", request).await?;
+        Ok(Response::new(res))
+    }
+
+    async fn send_message_from_hq(
+        &self,
+        request: Request<custom::v0::SendMessageFromHqRequest>,
+    ) -> Result<Response<custom::v0::SendMessageFromHqResponse>, Status> {
+        self.request("sendMessageFromHQ", request).await?;
+        Ok(Response::new(custom::v0::SendMessageFromHqResponse {}))
+    }
 }
