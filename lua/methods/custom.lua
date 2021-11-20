@@ -26,13 +26,13 @@ end
 
 GRPC.methods.getTickets = function()
     return GRPC.success({
-        red = CONQUEST.getRedTickets(),
-        blue = CONQUEST.getBlueTickets(),
+        red = Conquest:GetRedTickets(),
+        blue = Conquest:GetBlueTickets(),
     })
 end
 
 GRPC.methods.initializeTickets = function(params)
-    CONQUEST.initialize(params.maxRedTickets, params.maxBlueTickets)
+    Conquest:Initialize(params.maxRedTickets, params.maxBlueTickets)
     return GRPC.success(nil)
 end
 
@@ -49,5 +49,6 @@ end
 
 GRPC.methods.sendMessageFromHQ = function(params)
     GetCCForCoalition(params.coalition - 1):MessageToCoalition(params.text)
+    PlayNotificationSoundForCoalition(params.coalition - 1)
     return GRPC.success(nil)
 end
