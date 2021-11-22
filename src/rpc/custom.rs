@@ -85,6 +85,14 @@ impl CustomService for MissionRpc {
         Ok(Response::new(custom::v0::InitializeTicketsResponse {}))
     }
 
+    async fn initialize_capture_point(
+        &self,
+        request: Request<custom::v0::InitializeCapturePointRequest>,
+    ) -> Result<Response<custom::v0::InitializeCapturePointResponse>, Status> {
+        self.request("initializeCapturePoint", request).await?;
+        Ok(Response::new(custom::v0::InitializeCapturePointResponse {}))
+    }
+
     async fn on_zone_captured(
         &self,
         request: Request<custom::v0::OnZoneCapturedRequest>,

@@ -36,6 +36,11 @@ GRPC.methods.initializeTickets = function(params)
     return GRPC.success(nil)
 end
 
+GRPC.methods.initializeCapturePoint = function(params)
+    InitializeCapturePoint(params.zoneName, params.coalition - 1)
+    return GRPC.success(nil)
+end
+
 GRPC.methods.onZoneCaptured = function(params)
     OnZoneCaptured(params.coalition - 1, params.zoneName, params.zoneFriendlyName)
     return GRPC.success(nil)

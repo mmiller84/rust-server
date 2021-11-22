@@ -33,6 +33,9 @@ service CustomService {
   rpc InitializeTickets(InitializeTicketsRequest)
     returns (InitializeTicketsResponse) {}
 
+  rpc InitializeCapturePoint(InitializeCapturePointRequest)
+    returns (InitializeCapturePointResponse) {}
+
   rpc OnZoneCaptured(OnZoneCapturedRequest)
     returns (OnZoneCapturedResponse) {}
 
@@ -95,6 +98,14 @@ message InitializeTicketsRequest {
 }
 
 message InitializeTicketsResponse {
+}
+
+message InitializeCapturePointRequest {
+  string zoneName = 1;
+  dcs.common.v0.Coalition coalition = 2;
+}
+
+message InitializeCapturePointResponse {
 }
 
 message OnZoneCapturedRequest {
