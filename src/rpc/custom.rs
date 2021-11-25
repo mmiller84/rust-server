@@ -109,6 +109,14 @@ impl CustomService for MissionRpc {
         Ok(Response::new(res))
     }
 
+    async fn get_zone_statuses(
+        &self,
+        request: Request<custom::v0::GetZoneStatusesRequest>,
+    ) -> Result<Response<custom::v0::GetZoneStatusesResponse>, Status> {
+        let res: custom::v0::GetZoneStatusesResponse = self.request("getZoneStatuses", request).await?;
+        Ok(Response::new(res))
+    }
+
     async fn send_message_from_hq(
         &self,
         request: Request<custom::v0::SendMessageFromHqRequest>,

@@ -42,6 +42,9 @@ service CustomService {
   rpc IsZoneEmpty(IsZoneEmptyRequest)
     returns (IsZoneEmptyResponse) {}
 
+  rpc GetZoneStatuses(GetZoneStatusesRequest)
+    returns (GetZoneStatusesResponse) {}
+
   rpc SendMessageFromHQ(SendMessageFromHQRequest)
     returns (SendMessageFromHQResponse) {}
 }
@@ -102,7 +105,9 @@ message InitializeTicketsResponse {
 
 message InitializeCapturePointRequest {
   string zoneName = 1;
-  dcs.common.v0.Coalition coalition = 2;
+  string zoneFriendlyName = 2;
+  dcs.common.v0.Coalition coalition = 3;
+  bool reinforced = 4;
 }
 
 message InitializeCapturePointResponse {
@@ -125,10 +130,23 @@ message IsZoneEmptyResponse {
   bool empty = 1;
 }
 
+message GetZoneStatusesRequest {
+}
+
+message GetZoneStatusesResponse {
+  repeated ZoneStatus statuses = 1;
+}
+
 message SendMessageFromHQRequest {
   dcs.common.v0.Coalition coalition = 1;
   string text = 2;
 }
 
 message SendMessageFromHQResponse {
+}
+
+// todo: include a list of static units within the zone
+message ZoneStatus {
+  string zoneName = 1;
+  bool reinforced = 2;
 }

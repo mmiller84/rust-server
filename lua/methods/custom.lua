@@ -37,7 +37,7 @@ GRPC.methods.initializeTickets = function(params)
 end
 
 GRPC.methods.initializeCapturePoint = function(params)
-    InitializeCapturePoint(params.zoneName, params.coalition - 1)
+    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced)
     return GRPC.success(nil)
 end
 
@@ -49,6 +49,18 @@ end
 GRPC.methods.isZoneEmpty = function(params)
     return GRPC.success({
         empty = IsZoneEmpty(params.zoneName)
+    })
+end
+
+GRPC.methods.getZoneStatuses = function(params)
+    local statuses = {}
+
+    for _, c in pairs(Conquest.capturePoints) do
+        table.insert(statuses, {zoneName = c.ZoneName, reinforced = c.Reinforced})
+    end
+
+    return GRPC.success({
+        statuses = statuses
     })
 end
 
