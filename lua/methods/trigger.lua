@@ -10,17 +10,19 @@
 local MarkId = 0
 
 local function getMarkId()
-    local panels =  world.getMarkPanels()
-    local idx = MarkId
-    if panels then
-        local l_max = math.max
-        for _,panel in ipairs(panels) do
-            idx = l_max(panel.idx, idx)
-        end
-    end
-    idx = idx + 1
-    MarkId = idx
-    return idx
+    -- local panels =  world.getMarkPanels()
+    -- local idx = MarkId
+    -- if panels then
+    --     local l_max = math.max
+    --     for _,panel in ipairs(panels) do
+    --         idx = l_max(panel.idx, idx)
+    --     end
+    -- end
+    -- idx = idx + 1
+    -- MarkId = idx
+    -- return idx
+
+    return UTILS.GetMarkID() --use the MOOSE implementation so that this code is consistent with MOOSE
 end
 
 GRPC.methods.outText = function(params)
