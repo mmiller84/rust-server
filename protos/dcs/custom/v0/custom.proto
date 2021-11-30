@@ -33,6 +33,9 @@ service CustomService {
   rpc InitializeTickets(InitializeTicketsRequest)
     returns (InitializeTicketsResponse) {}
 
+  rpc InitializeFactoryObjectives(InitializeFactoryObjectivesRequest)
+    returns (InitializeFactoryObjectivesResponse) {}
+
   rpc InitializeCapturePoint(InitializeCapturePointRequest)
     returns (InitializeCapturePointResponse) {}
 
@@ -44,6 +47,9 @@ service CustomService {
 
   rpc GetZoneStatuses(GetZoneStatusesRequest)
     returns (GetZoneStatusesResponse) {}
+  
+  rpc GetFactoryState(GetFactoryStateRequest)
+    returns (GetFactoryStateResponse) {}
 
   rpc SendMessageFromHQ(SendMessageFromHQRequest)
     returns (SendMessageFromHQResponse) {}
@@ -103,6 +109,14 @@ message InitializeTicketsRequest {
 message InitializeTicketsResponse {
 }
 
+message InitializeFactoryObjectivesRequest {
+  FactoryState redState = 1;
+  FactoryState blueState = 2;
+}
+
+message InitializeFactoryObjectivesResponse {
+}
+
 message InitializeCapturePointRequest {
   string zoneName = 1;
   string zoneFriendlyName = 2;
@@ -137,6 +151,14 @@ message GetZoneStatusesResponse {
   repeated ZoneStatus statuses = 1;
 }
 
+message GetFactoryStateRequest {
+}
+
+message GetFactoryStateResponse {
+  FactoryState red = 1;
+  FactoryState blue = 2;
+}
+
 message SendMessageFromHQRequest {
   dcs.common.v0.Coalition coalition = 1;
   string text = 2;
@@ -149,4 +171,16 @@ message SendMessageFromHQResponse {
 message ZoneStatus {
   string zoneName = 1;
   bool reinforced = 2;
+}
+
+message FactoryState {
+  dcs.common.v0.Position origin = 1;
+  bool objectiveCompleted = 2;
+  bool reconCompleted = 3;
+  repeated FactoryStatic statics = 4;
+}
+
+message FactoryStatic {
+  string type = 1;
+  dcs.common.v0.Position coordinate = 2;
 }

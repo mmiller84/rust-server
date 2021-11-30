@@ -85,6 +85,14 @@ impl CustomService for MissionRpc {
         Ok(Response::new(custom::v0::InitializeTicketsResponse {}))
     }
 
+    async fn initialize_factory_objectives(
+        &self,
+        request: Request<custom::v0::InitializeFactoryObjectivesRequest>,
+    ) -> Result<Response<custom::v0::InitializeFactoryObjectivesResponse>, Status> {
+        self.request("initializeFactoryObjectives", request).await?;
+        Ok(Response::new(custom::v0::InitializeFactoryObjectivesResponse {}))
+    }
+
     async fn initialize_capture_point(
         &self,
         request: Request<custom::v0::InitializeCapturePointRequest>,
@@ -114,6 +122,14 @@ impl CustomService for MissionRpc {
         request: Request<custom::v0::GetZoneStatusesRequest>,
     ) -> Result<Response<custom::v0::GetZoneStatusesResponse>, Status> {
         let res: custom::v0::GetZoneStatusesResponse = self.request("getZoneStatuses", request).await?;
+        Ok(Response::new(res))
+    }
+
+    async fn get_factory_state(
+        &self,
+        request: Request<custom::v0::GetFactoryStateRequest>,
+    ) -> Result<Response<custom::v0::GetFactoryStateResponse>, Status> {
+        let res: custom::v0::GetFactoryStateResponse = self.request("getFactoryState", request).await?;
         Ok(Response::new(res))
     }
 

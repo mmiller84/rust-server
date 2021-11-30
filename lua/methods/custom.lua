@@ -36,6 +36,11 @@ GRPC.methods.initializeTickets = function(params)
     return GRPC.success(nil)
 end
 
+GRPC.methods.initializeFactoryObjectives = function(params)
+    SpawnFactoryObjectives(params.redState, params.blueState)
+    return GRPC.success(nil)
+end
+
 GRPC.methods.initializeCapturePoint = function(params)
     InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced)
     return GRPC.success(nil)
@@ -61,6 +66,13 @@ GRPC.methods.getZoneStatuses = function(params)
 
     return GRPC.success({
         statuses = statuses
+    })
+end
+
+GRPC.methods.getFactoryState = function()
+    return GRPC.success({
+        red = RedFactory:GetState(),
+        blue = BlueFactory:GetState()
     })
 end
 
