@@ -122,6 +122,8 @@ message InitializeCapturePointRequest {
   string zoneFriendlyName = 2;
   dcs.common.v0.Coalition coalition = 3;
   bool reinforced = 4;
+  repeated string redTemplates = 5;
+  repeated string blueTemplates = 6;
 }
 
 message InitializeCapturePointResponse {

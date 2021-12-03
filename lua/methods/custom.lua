@@ -42,7 +42,7 @@ GRPC.methods.initializeFactoryObjectives = function(params)
 end
 
 GRPC.methods.initializeCapturePoint = function(params)
-    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced)
+    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates)
     return GRPC.success(nil)
 end
 
@@ -53,7 +53,7 @@ end
 
 GRPC.methods.isZoneEmpty = function(params)
     return GRPC.success({
-        empty = IsZoneEmpty(params.zoneName)
+        empty = Conquest:GetCapturePoint(params.zoneName):IsZoneEmpty()
     })
 end
 
