@@ -2,6 +2,7 @@
 #![recursion_limit = "256"]
 
 mod chat;
+mod connection_event_stream;
 #[cfg(feature = "hot-reload")]
 mod hot_reload;
 pub mod rpc;
@@ -199,6 +200,16 @@ pub fn on_chat_message(_: &Lua, (player_id, message, all): (u32, String, bool)) 
 }
 
 #[no_mangle]
+pub fn on_player_try_connect(_: &Lua, (addr, name, ucid, id): (String, String, String, u32)) -> LuaResult<()> {
+    log::info!("lib::on_player_try_connect");
+    if let Some(ref server) = *SERVER.read().unwrap() {
+        server.on_player_try_connect(addr, name, ucid, id);
+    }
+
+    Ok(())
+}
+
+#[no_mangle]
 pub fn log_error(_: &Lua, err: String) -> LuaResult<()> {
     log::error!("{}", err);
     Ok(())
@@ -230,7 +241,7 @@ pub enum Error {
     DeserializeResult {
         #[source]
         err: mlua::Error,
-        method: String,
+        method: String, 
         result: String,
     },
     #[error("Failed to serialize params: {0}")]
@@ -249,6 +260,10 @@ pub fn dcs_grpc_hot_reload(lua: &Lua) -> LuaResult<LuaTable> {
         "onChatMessage",
         lua.create_function(hot_reload::on_chat_message)?,
     )?;
+    exports.set(
+        "onPlayerTryConnect",
+        lua.create_function(hot_reload::on_player_try_connect)?,
+    )?;
     exports.set("logError", lua.create_function(hot_reload::log_error)?)?;
     exports.set("logWarning", lua.create_function(hot_reload::log_warning)?)?;
     exports.set("logInfo", lua.create_function(hot_reload::log_info)?)?;
@@ -265,6 +280,7 @@ pub fn dcs_grpc(lua: &Lua) -> LuaResult<LuaTable> {
     exports.set("next", lua.create_function(next)?)?;
     exports.set("event", lua.create_function(event)?)?;
     exports.set("onChatMessage", lua.create_function(on_chat_message)?)?;
+    exports.set("onPlayerTryConnect", lua.create_function(on_player_try_connect)?)?;
     exports.set("logError", lua.create_function(log_error)?)?;
     exports.set("logWarning", lua.create_function(log_warning)?)?;
     exports.set("logInfo", lua.create_function(log_info)?)?;

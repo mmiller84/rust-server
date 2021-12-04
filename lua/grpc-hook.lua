@@ -65,6 +65,11 @@ local function init()
     return msg
   end
 
+  function handler.onPlayerTryConnect(addr, name, ucid, id)
+    log.write("[GRPC-Hook]", log.INFO, string.format("onPlayerTryConnect(%s, %s, %s, %d)", addr, name, ucid, id))
+    _G.GRPC.onPlayerTryConnect(addr, name, ucid, id)
+  end
+
   DCS.setUserCallbacks(handler)
 
   log.write("[GRPC-Hook]", log.INFO, "Initialized ...")

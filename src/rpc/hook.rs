@@ -19,6 +19,15 @@ impl HookService for HookRpc {
         >,
     >;
 
+    type StreamPlayerConnectEventsStream = Pin<
+        Box<
+            dyn Stream<Item = Result<hook::v0::StreamPlayerConnectEventsResponse, tonic::Status>>
+                + Send
+                + Sync
+                + 'static,
+        >,
+    >;
+
     async fn get_mission_name(
         &self,
         request: Request<hook::v0::GetMissionNameRequest>,
@@ -48,6 +57,19 @@ impl HookService for HookRpc {
         _request: Request<hook::v0::StreamChatMessagesRequest>,
     ) -> Result<Response<Self::StreamChatMessagesStream>, Status> {
         let rx = BroadcastStream::new(self.chat.subscribe());
+        let stream = AbortableStream::new(
+            self.shutdown_signal.signal(),
+            rx.map_err(|err| Status::unknown(err.to_string())),
+        );
+        Ok(Response::new(Box::pin(stream)))
+    }
+
+    async fn stream_player_connect_events(
+        &self,
+        _request: Request<hook::v0::StreamPlayerConnectEventsRequest>,
+    ) -> Result<Response<Self::StreamPlayerConnectEventsStream>, Status> {
+        log::info!("hook::stream_player_connect_events");
+        let rx = BroadcastStream::new(self.connect_event.subscribe());
         let stream = AbortableStream::new(
             self.shutdown_signal.signal(),
             rx.map_err(|err| Status::unknown(err.to_string())),
