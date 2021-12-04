@@ -6,6 +6,10 @@ service HookService {
   // https://wiki.hoggitworld.com/view/DCS_func_getMissionName
   rpc GetMissionName(GetMissionNameRequest) returns (GetMissionNameResponse) {}
 
+  rpc GetPlayerInfo(GetPlayerInfoRequest) returns (GetPlayerInfoResponse) {}
+
+  rpc GetPlayerInfoByPlayerName(GetPlayerInfoByPlayerNameRequest) returns (GetPlayerInfoByPlayerNameResponse) {}
+
   // Stream all chat messages.
   rpc StreamChatMessages(StreamChatMessagesRequest)
       returns (stream StreamChatMessagesResponse) {}
@@ -19,6 +23,34 @@ message GetMissionNameRequest {}
 
 message GetMissionNameResponse {
   string name = 1;
+}
+
+message GetPlayerInfoRequest {
+  uint32 playerId = 1;
+}
+
+message GetPlayerInfoResponse {
+  uint32 id = 1;
+  string name = 2;
+  uint32 side = 3;
+  uint32 slot = 4;
+  uint32 ping = 5;
+  string ipaddr = 6;
+  string ucid = 7;
+}
+
+message GetPlayerInfoByPlayerNameRequest {
+  string name = 1;
+}
+
+message GetPlayerInfoByPlayerNameResponse {
+  uint32 id = 1;
+  string name = 2;
+  uint32 side = 3;
+  string slot = 4;
+  uint32 ping = 5;
+  string ipaddr = 6;
+  string ucid = 7;
 }
 
 message StreamChatMessagesRequest {}
