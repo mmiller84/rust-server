@@ -83,6 +83,18 @@ pub fn on_chat_message(lua: &Lua, (player_id, message, all): (u32, String, bool)
     }
 }
 
+pub fn on_player_try_connect(lua: &Lua, (addr, name, ucid, id): (String, String, String, u32)) -> LuaResult<()> {
+    if let Some(ref lib) = *LIBRARY.read().unwrap() {
+        let f: Symbol<fn(lua: &Lua, arg: (String, String, String, u32)) -> LuaResult<()>> = unsafe {
+            lib.get(b"on_player_try_connect")
+                .map_err(|err| mlua::Error::ExternalError(Arc::new(err)))?
+        };
+        f(lua, (addr, name, ucid, id))
+    } else {
+        Ok(())
+    }
+}
+
 pub fn log_error(lua: &Lua, err: String) -> LuaResult<()> {
     if let Some(ref lib) = *LIBRARY.read().unwrap() {
         let f: Symbol<fn(lua: &Lua, err: String) -> LuaResult<()>> = unsafe {

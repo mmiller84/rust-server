@@ -48,6 +48,16 @@ GRPC.onChatMessage = function(playerID, msg, all)
   return grpc.onChatMessage(playerID, msg, all)
 end
 
+GRPC.onPlayerTryConnect = function(addr, name, ucid, id)
+  if isMissionEnv then
+    env.info("GRPC.onPlayerTryConnect")
+  else
+    log.write("[GRPC-Hook]", log.INFO, "GRPC.onPlayerTryConnect")
+  end
+
+  return grpc.onPlayerTryConnect(addr, name, ucid, id)
+end
+
 --
 -- Logging methods
 --

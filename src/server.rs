@@ -3,6 +3,7 @@ use std::net::SocketAddr;
 use std::time::Duration;
 
 use crate::chat::Chat;
+use crate::connection_event_stream::ConnectionEvent;
 use crate::rpc::{HookRpc, MissionRpc};
 use crate::services::DcsServices;
 use crate::shutdown::{Shutdown, ShutdownHandle};
@@ -30,6 +31,7 @@ struct ServerState {
     ipc_mission: IPC<StreamEventsResponse>,
     ipc_hook: IPC<()>,
     chat: Chat,
+    connect_event: ConnectionEvent,
     stats: Stats,
 }
 
@@ -63,6 +65,7 @@ impl Server {
                 ipc_mission,
                 ipc_hook,
                 chat: Chat::default(),
+                connect_event: ConnectionEvent::default(),
                 stats: Stats::new(shutdown.handle()),
             },
             shutdown,
@@ -102,6 +105,11 @@ impl Server {
 
     pub fn handle_chat_message(&self, player_id: u32, message: String, all: bool) {
         self.state.chat.handle_message(player_id, message, all);
+    }
+
+    pub fn on_player_try_connect(&self, addr: String, name: String, ucid: String, id: u32) {
+        log::info!("server::on_player_try_connect");
+        self.state.connect_event.handle_event(addr, name, ucid, id);
     }
 
     pub fn ipc_mission(&self) -> &IPC<StreamEventsResponse> {
@@ -151,11 +159,12 @@ async fn try_run(
         ipc_mission,
         ipc_hook,
         chat,
+        connect_event,
         stats,
     } = state;
 
     let mut mission_rpc = MissionRpc::new(ipc_mission, stats.clone(), shutdown_signal.clone());
-    let mut hook_rpc = HookRpc::new(ipc_hook, chat, stats, shutdown_signal.clone());
+    let mut hook_rpc = HookRpc::new(ipc_hook, chat, connect_event, stats, shutdown_signal.clone());
 
     if eval_enabled {
         mission_rpc.enable_eval();
