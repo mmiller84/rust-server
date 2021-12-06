@@ -25,10 +25,16 @@ GRPC.methods.missionEval = function(params)
 end
 
 GRPC.methods.getTickets = function()
-    return GRPC.success({
+    local ret = {
         red = Conquest:GetRedTickets(),
         blue = Conquest:GetBlueTickets(),
-    })
+    }
+
+    -- reset the local ticket count. The grpc service is the source of truth for the ticket counts
+    Conquest.redTickets = 0
+    Conquest.blueTickets = 0
+
+    return GRPC.success(ret)
 end
 
 GRPC.methods.initializeTickets = function(params)
@@ -42,8 +48,19 @@ GRPC.methods.initializeFactoryObjectives = function(params)
 end
 
 GRPC.methods.initializeCapturePoint = function(params)
-    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates)
+    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates, params.staticsOnly)
     return GRPC.success(nil)
+end
+
+GRPC.methods.initializePlayerPoints = function(params)
+    Points:SetBalance(params.playerName, params.points)
+    return GRPC.success(nil)
+end
+
+GRPC.methods.getPlayerPoints = function(params)
+    return GRPC.success({
+        playerPoints = Points:GetAndResetSpentPoints()
+    })
 end
 
 GRPC.methods.onZoneCaptured = function(params)

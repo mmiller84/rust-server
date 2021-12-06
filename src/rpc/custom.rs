@@ -101,6 +101,22 @@ impl CustomService for MissionRpc {
         Ok(Response::new(custom::v0::InitializeCapturePointResponse {}))
     }
 
+    async fn initialize_player_points(
+        &self,
+        request: Request<custom::v0::InitializePlayerPointsRequest>,
+    ) -> Result<Response<custom::v0::InitializePlayerPointsResponse>, Status> {
+        self.request("initializePlayerPoints", request).await?;
+        Ok(Response::new(custom::v0::InitializePlayerPointsResponse {}))
+    }
+
+    async fn get_player_points(
+        &self,
+        request: Request<custom::v0::GetPlayerPointsRequest>,
+    ) -> Result<Response<custom::v0::GetPlayerPointsResponse>, Status> {
+        let res: custom::v0::GetPlayerPointsResponse = self.request("getPlayerPoints", request).await?;
+        Ok(Response::new(res))
+    }
+
     async fn on_zone_captured(
         &self,
         request: Request<custom::v0::OnZoneCapturedRequest>,

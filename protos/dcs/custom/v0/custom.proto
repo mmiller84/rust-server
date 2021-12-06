@@ -39,6 +39,12 @@ service CustomService {
   rpc InitializeCapturePoint(InitializeCapturePointRequest)
     returns (InitializeCapturePointResponse) {}
 
+  rpc InitializePlayerPoints(InitializePlayerPointsRequest)
+    returns (InitializePlayerPointsResponse) {}
+
+  rpc GetPlayerPoints(GetPlayerPointsRequest)
+    returns (GetPlayerPointsResponse) {}
+
   rpc OnZoneCaptured(OnZoneCapturedRequest)
     returns (OnZoneCapturedResponse) {}
 
@@ -124,9 +130,26 @@ message InitializeCapturePointRequest {
   bool reinforced = 4;
   repeated string redTemplates = 5;
   repeated string blueTemplates = 6;
+  bool staticsOnly = 7;
 }
 
 message InitializeCapturePointResponse {
+}
+
+message InitializePlayerPointsRequest {
+  uint32 playerId = 1;
+  string playerName = 2;
+  int32 points = 3;
+}
+
+message InitializePlayerPointsResponse {
+}
+
+message GetPlayerPointsRequest {
+}
+
+message GetPlayerPointsResponse {
+  repeated PlayerPoints playerPoints = 1;
 }
 
 message OnZoneCapturedRequest {
@@ -138,7 +161,7 @@ message OnZoneCapturedRequest {
 message OnZoneCapturedResponse {
 }
 
-message IsZoneEmptyRequest {
+message IsZoneEmptyRequest { 
   string zoneName = 1;
 }
 
@@ -185,4 +208,9 @@ message FactoryState {
 message FactoryStatic {
   string type = 1;
   dcs.common.v0.Position coordinate = 2;
+}
+
+message PlayerPoints {
+  string playerName = 2;
+  int32 points = 3;
 }
