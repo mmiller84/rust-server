@@ -45,6 +45,9 @@ service CustomService {
   rpc GetPlayerPoints(GetPlayerPointsRequest)
     returns (GetPlayerPointsResponse) {}
 
+  rpc CreditPlayerPoints(CreditPlayerPointsRequest)
+    returns (CreditPlayerPointsResponse) {}
+
   rpc OnZoneCaptured(OnZoneCapturedRequest)
     returns (OnZoneCapturedResponse) {}
 
@@ -150,6 +153,14 @@ message GetPlayerPointsRequest {
 
 message GetPlayerPointsResponse {
   repeated PlayerPoints playerPoints = 1;
+}
+
+message CreditPlayerPointsRequest {
+  string playerName = 1;
+  int32 points = 2;
+}
+
+message CreditPlayerPointsResponse {
 }
 
 message OnZoneCapturedRequest {

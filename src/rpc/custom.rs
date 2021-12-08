@@ -117,6 +117,14 @@ impl CustomService for MissionRpc {
         Ok(Response::new(res))
     }
 
+    async fn credit_player_points(
+        &self,
+        request: Request<custom::v0::CreditPlayerPointsRequest>,
+    ) -> Result<Response<custom::v0::CreditPlayerPointsResponse>, Status> {
+        self.request("creditPlayerPoints", request).await?;
+        Ok(Response::new(custom::v0::CreditPlayerPointsResponse {}))
+    }
+
     async fn on_zone_captured(
         &self,
         request: Request<custom::v0::OnZoneCapturedRequest>,

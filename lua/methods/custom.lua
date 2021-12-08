@@ -63,6 +63,13 @@ GRPC.methods.getPlayerPoints = function(params)
     })
 end
 
+
+GRPC.methods.creditPlayerPoints = function(params)
+    Points:CreditPoints(params.playerName, params.points, true)
+
+    return GRPC.success(nil)
+end
+
 GRPC.methods.onZoneCaptured = function(params)
     OnZoneCaptured(params.coalition - 1, params.zoneName, params.zoneFriendlyName)
     return GRPC.success(nil)
