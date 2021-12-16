@@ -62,6 +62,9 @@ service CustomService {
 
   rpc SendMessageFromHQ(SendMessageFromHQRequest)
     returns (SendMessageFromHQResponse) {}
+
+  rpc InitializeSkynet(InitializeSkynetRequest)
+    returns (InitializeSkynetResponse) {}
 }
 
 message RequestMissionAssignmentRequest {
@@ -137,6 +140,13 @@ message InitializeCapturePointRequest {
 }
 
 message InitializeCapturePointResponse {
+}
+
+message InitializeSkynetRequest {
+}
+
+message InitializeSkynetResponse {
+
 }
 
 message InitializePlayerPointsRequest {

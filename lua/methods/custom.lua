@@ -47,6 +47,11 @@ GRPC.methods.initializeFactoryObjectives = function(params)
     return GRPC.success(nil)
 end
 
+GRPC.methods.initializeSkynet = function(params)
+    InitializeSkynet()
+    return GRPC.success(nil)
+end
+
 GRPC.methods.initializeCapturePoint = function(params)
     InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates, params.staticsOnly)
     return GRPC.success(nil)
@@ -62,7 +67,6 @@ GRPC.methods.getPlayerPoints = function(params)
         playerPoints = Points:GetAndResetSpentPoints()
     })
 end
-
 
 GRPC.methods.creditPlayerPoints = function(params)
     Points:CreditPoints(params.playerName, params.points, true)

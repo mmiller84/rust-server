@@ -85,6 +85,14 @@ impl CustomService for MissionRpc {
         Ok(Response::new(custom::v0::InitializeTicketsResponse {}))
     }
 
+    async fn initialize_skynet(
+        &self,
+        request: Request<custom::v0::InitializeSkynetRequest>,
+    ) -> Result<Response<custom::v0::InitializeSkynetResponse>, Status> {
+        self.request("initializeSkynet", request).await?;
+        Ok(Response::new(custom::v0::InitializeSkynetResponse {}))
+    }
+
     async fn initialize_factory_objectives(
         &self,
         request: Request<custom::v0::InitializeFactoryObjectivesRequest>,
