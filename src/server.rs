@@ -52,8 +52,8 @@ pub struct Config {
 
 impl Server {
     pub fn new(config: &Config) -> Result<Self, StartError> {
-        let ipc_mission = IPC::new();
-        let ipc_hook = IPC::new();
+        let ipc_mission = IPC::default();
+        let ipc_hook = IPC::default();
         let runtime = Runtime::new()?;
         let shutdown = Shutdown::new();
         Ok(Self {
@@ -151,7 +151,7 @@ async fn try_run(
     shutdown_signal: ShutdownHandle,
     after_shutdown: &mut Receiver<()>,
 ) -> Result<(), transport::Error> {
-    log::info!("Staring gRPC Server ...");
+    log::info!("Staring gRPC Server (on {}) ...", state.addr);
 
     let ServerState {
         addr,

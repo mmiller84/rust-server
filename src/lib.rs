@@ -62,6 +62,7 @@ pub fn init(config: &Config) {
         .logger(Logger::builder().build("dcs_grpc", level))
         .logger(Logger::builder().build("tokio", level))
         .logger(Logger::builder().build("tonic", level))
+        .logger(Logger::builder().build("dcs_module_ipc", level))
         .build(Root::builder().appender("file").build(LevelFilter::Off))
         .unwrap();
 
@@ -78,6 +79,7 @@ pub fn start(_: &Lua, config: Config) -> LuaResult<()> {
 
     init(&config);
 
+    log::debug!("Config: {:#?}", config);
     log::info!("Starting ...");
 
     let mut server =
