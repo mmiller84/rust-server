@@ -6,17 +6,6 @@ service HookService {
   // https://wiki.hoggitworld.com/view/DCS_func_getMissionName
   rpc GetMissionName(GetMissionNameRequest) returns (GetMissionNameResponse) {}
 
-  rpc GetPlayerInfo(GetPlayerInfoRequest) returns (GetPlayerInfoResponse) {}
-
-  rpc GetPlayerInfoByPlayerName(GetPlayerInfoByPlayerNameRequest) returns (GetPlayerInfoByPlayerNameResponse) {}
-
-  // Stream all chat messages.
-  rpc StreamChatMessages(StreamChatMessagesRequest)
-      returns (stream StreamChatMessagesResponse) {}
-
-  rpc StreamPlayerConnectEvents(StreamPlayerConnectEventsRequest)
-      returns (stream StreamPlayerConnectEventsResponse) {}
-
   // Evaluate some Lua inside of the hook environment and return the result as a
   // JSON string. Disabled by default.
   rpc Eval(EvalRequest) returns (EvalResponse) {}
@@ -26,54 +15,6 @@ message GetMissionNameRequest {}
 
 message GetMissionNameResponse {
   string name = 1;
-}
-
-message GetPlayerInfoRequest {
-  uint32 playerId = 1;
-}
-
-message GetPlayerInfoResponse {
-  uint32 id = 1;
-  string name = 2;
-  uint32 side = 3;
-  uint32 slot = 4;
-  uint32 ping = 5;
-  string ipaddr = 6;
-  string ucid = 7;
-}
-
-message GetPlayerInfoByPlayerNameRequest {
-  string name = 1;
-}
-
-message GetPlayerInfoByPlayerNameResponse {
-  uint32 id = 1;
-  string name = 2;
-  uint32 side = 3;
-  string slot = 4;
-  uint32 ping = 5;
-  string ipaddr = 6;
-  string ucid = 7;
-}
-
-message StreamChatMessagesRequest {}
-
-message StreamChatMessagesResponse {
-  // The ID of the player sending the chat messaage.
-  uint32 player_id = 2;
-  // The chat message.
-  string message = 3;
-  // Whether the message was send to all or only to allies.
-  bool all = 4;
-}
-
-message StreamPlayerConnectEventsRequest {}
-
-message StreamPlayerConnectEventsResponse {
-  string addr = 1; // ip address
-  string name = 2; // player name
-  string ucid = 3; // player's unique id
-  uint32 id = 4; // player's id within the mission
 }
 
 message EvalRequest {

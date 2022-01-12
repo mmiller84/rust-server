@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Generated scaffolding for the `net.*` scope into `NetService`
+- `SendChat` API
+- `SendChatTo` API
+
+### Changed
+- Stream `PlayerSendChatEvent` to the `MissionService.StreamEvents` for clients to observe the chat as part of the event stream
+
+### Removed
+- `HookService.StreamChatMessages` has been removed in favor for `PlayerSendChatEvent`
+
+## [0.2.0] - 2021-11-17
+### Added
 - `SetEmission` API
 - `GetMissionStartTime` API
 - `GetScenarioCurrentTime` API
