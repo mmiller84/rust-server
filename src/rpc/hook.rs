@@ -27,4 +27,20 @@ impl HookService for HookRpc {
         })?;
         Ok(Response::new(hook::v0::EvalResponse { json }))
     }
+
+    async fn get_player_info(
+        &self,
+        request: Request<hook::v0::GetPlayerInfoRequest>,
+    ) -> Result<Response<hook::v0::GetPlayerInfoResponse>, Status> {
+        let res: hook::v0::GetPlayerInfoResponse = self.request("getPlayerInfo", request).await?;
+        Ok(Response::new(res))
+    }
+
+    async fn get_player_info_by_player_name(
+        &self,
+        request: Request<hook::v0::GetPlayerInfoByPlayerNameRequest>,
+    ) -> Result<Response<hook::v0::GetPlayerInfoByPlayerNameResponse>, Status> {
+        let res: hook::v0::GetPlayerInfoByPlayerNameResponse = self.request("getPlayerInfoByPlayerName", request).await?;
+        Ok(Response::new(res))
+    }
 }

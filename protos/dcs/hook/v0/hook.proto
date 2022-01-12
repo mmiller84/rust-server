@@ -9,6 +9,10 @@ service HookService {
   // Evaluate some Lua inside of the hook environment and return the result as a
   // JSON string. Disabled by default.
   rpc Eval(EvalRequest) returns (EvalResponse) {}
+
+  rpc GetPlayerInfo(GetPlayerInfoRequest) returns (GetPlayerInfoResponse) {}
+
+  rpc GetPlayerInfoByPlayerName(GetPlayerInfoByPlayerNameRequest) returns (GetPlayerInfoByPlayerNameResponse) {}
 }
 
 message GetMissionNameRequest {}
@@ -23,4 +27,32 @@ message EvalRequest {
 
 message EvalResponse {
   string json = 1;
+}
+
+message GetPlayerInfoRequest {
+  uint32 playerId = 1;
+}
+
+message GetPlayerInfoResponse {
+  uint32 id = 1;
+  string name = 2;
+  uint32 side = 3;
+  uint32 slot = 4;
+  uint32 ping = 5;
+  string ipaddr = 6;
+  string ucid = 7;
+}
+
+message GetPlayerInfoByPlayerNameRequest {
+  string name = 1;
+}
+
+message GetPlayerInfoByPlayerNameResponse {
+  uint32 id = 1;
+  string name = 2;
+  uint32 side = 3;
+  string slot = 4;
+  uint32 ping = 5;
+  string ipaddr = 6;
+  string ucid = 7;
 }
