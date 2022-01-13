@@ -9,6 +9,10 @@ GRPC.methods.getMissionName = function()
   return GRPC.success({name = DCS.getMissionName()})
 end
 
+GRPC.methods.getMissionFilename = function()
+  return GRPC.success({name = DCS.getMissionFilename()})
+end
+
 GRPC.methods.getPlayerInfo = function(params)
   return GRPC.success(net.get_player_info(params.playerID))
 end
