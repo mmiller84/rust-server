@@ -155,6 +155,7 @@ message InitializeCapturePointRequest {
   repeated string redTemplates = 5;
   repeated string blueTemplates = 6;
   bool staticsOnly = 7;
+  bool naval = 8;
 }
 
 message InitializeCapturePointResponse {

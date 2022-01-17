@@ -61,7 +61,7 @@ GRPC.methods.initializeSkynet = function(params)
 end
 
 GRPC.methods.initializeCapturePoint = function(params)
-    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates, params.staticsOnly)
+    InitializeCapturePoint(params.zoneName, params.zoneFriendlyName, params.coalition - 1, params.reinforced, params.redTemplates, params.blueTemplates, params.staticsOnly, params.naval)
     return GRPC.success(nil)
 end
 
