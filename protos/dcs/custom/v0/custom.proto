@@ -69,6 +69,9 @@ service CustomService {
   rpc SendMessageFromHQ(SendMessageFromHQRequest)
     returns (SendMessageFromHQResponse) {}
 
+  rpc RebuildFacMenus(RebuildFacMenusRequest)
+    returns (RebuildFacMenusResponse) {}
+
   rpc InitializeSkynet(InitializeSkynetRequest)
     returns (InitializeSkynetResponse) {}
 }
@@ -230,6 +233,14 @@ message SendMessageFromHQRequest {
 }
 
 message SendMessageFromHQResponse {
+}
+
+message RebuildFacMenusRequest {
+  string reconUnitName = 1;
+  repeated string visibleUnits = 2;
+}
+
+message RebuildFacMenusResponse {
 }
 
 // todo: include a list of static units within the zone

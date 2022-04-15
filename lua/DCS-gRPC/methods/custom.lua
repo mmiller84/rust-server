@@ -117,3 +117,21 @@ GRPC.methods.sendMessageFromHQ = function(params)
     PlayNotificationSoundForCoalition(params.coalition - 1)
     return GRPC.success(nil)
 end
+
+GRPC.methods.rebuildFacMenus = function(params)
+    local units = {}
+    for _,unitName in pairs(params.visibleUnits) do
+        local unit = UNIT:FindByName(unitName)
+
+        if unit:IsAlive() then
+            units[#units+1] = unit
+        end
+    end
+
+    local reconUnit = UNIT:FindByName(params.reconUnitName)
+    if reconUnit and reconUnit:IsAlive() then
+        Fac:RebuildMenus(reconUnit:GetGroup(), units)
+    end
+
+    return GRPC.success(nil)
+end

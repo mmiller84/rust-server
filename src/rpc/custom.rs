@@ -188,4 +188,12 @@ impl CustomService for MissionRpc {
         self.request("sendMessageFromHQ", request).await?;
         Ok(Response::new(custom::v0::SendMessageFromHqResponse {}))
     }
+
+    async fn rebuild_fac_menus(
+        &self,
+        request: Request<custom::v0::RebuildFacMenusRequest>,
+    ) -> Result<Response<custom::v0::RebuildFacMenusResponse>, Status> {
+        self.request("rebuildFacMenus", request).await?;
+        Ok(Response::new(custom::v0::RebuildFacMenusResponse {}))
+    }
 }

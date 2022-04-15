@@ -140,6 +140,7 @@ end
 GRPC.methods.getUnitUpdate = function(params)
   local unit = Unit.getByName(params.name)
   if unit == nil then
+    GRPC.logInfo("unit `" .. tostring(params.name) .. "` does not exist")
     return GRPC.errorNotFound("unit `" .. tostring(params.name) .. "` does not exist")
   end
 
